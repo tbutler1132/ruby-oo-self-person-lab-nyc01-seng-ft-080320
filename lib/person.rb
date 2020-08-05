@@ -1,94 +1,93 @@
 # Code developed by Vincent Collis and Tim Butler
-require 'pry'
+# require 'pry'
 
 class Person
     attr_reader :name
-    # attr_writer :hygiene_points, :happiness_points
-    attr_accessor :bank, :hygiene_points, :happiness_points
+    attr_accessor :bank_account, :hygiene, :happiness
 
-    def initialize(name, bank='$25', happiness_points = 8, hygiene_points = 8) 
+    def initialize(name, bank_account=25, happiness = 8, hygiene = 8) 
         @name = name
-        @bank = bank
-        @happiness_points = happiness_points
-        @hygiene_points = hygiene_points
+        @bank_account = bank_account
+        @happiness = happiness
+        @hygiene = hygiene
     end
 
-    def hygiene_check(hygiene_points)
-        if hygiene_points >= 10
-            @hygiene_points = 10
-        elsif hygiene_points <= 0
-            @hygiene_points = 0
+    def hygiene_check(hygiene)
+        if hygiene >= 10
+            @hygiene = 10
+        elsif hygiene <= 0
+            @hygiene = 0
         else
-            @hygiene_points = hygiene_points
+            @hygiene = hygiene
         end
     end
     
-    def happiness_check(happiness_points)
-        if happiness_points >= 10
-            @happiness_points = 10
-        elsif happiness_points <= 0
-            @happiness_points = 0
+    def happiness_check(happiness)
+        if happiness >= 10
+            @happiness = 10
+        elsif happiness <= 0
+            @happiness = 0
         else
-            @happiness_points = happiness_points
+            @happiness = happiness
         end
     end
 
     def clean?
-        if @hygiene_points > 7
+        if @hygiene > 7
             true
         else
-            @hygiene_points <= 7
+            @hygiene <= 7
             false
         end
     end
 
     def happy?
-        if @happiness_points > 7
+        if @happiness > 7
             true
         else
-            @happiness_points <= 7
+            @happiness <= 7
             false
         end
     end
 
     def get_paid(salary)
-        @bank += salary
+        @bank_account += salary
         return "all about the benjamins"
     end
 
     def take_bath
-        @hygiene_points += 4
-        hygiene_check(@hygiene_points)
+        @hygiene += 4
+        hygiene_check(@hygiene)
         return "♪ Rub-a-dub just relaxing in the tub ♫"
     end
 
     def work_out
-        @happiness_points += 2
-        @hygiene_points -= 3
+        @happiness += 2
+        @hygiene -= 3
 
-        hygiene_check(hygiene_points)
-        happiness_check(happiness_points)
+        hygiene_check(hygiene)
+        happiness_check(happiness)
         return "♪ another one bites the dust ♫"
     end
 
     def call_friend(person = "friend")
         #default person +3
-        @happiness_points +=3
-        happiness_check(@happiness_points)
+        @happiness +=3
+        happiness_check(@happiness)
         if person != 'friend'
-            person.happiness_points += 3
-            person.happiness_check(person.happiness_points)
+            person.happiness += 3
+            person.happiness_check(person.happiness)
         end
     end
 
     def start_conversation(person, topic)
         if topic == "politics"
-            @happiness_points -= 1
-            person.happiness_points -= 1
+            @happiness -= 2
+            person.happiness -= 2
             return "blah blah partisan blah lobbyist"
         elsif topic == "weather"
-            @happiness_points += 1
-            person.happiness_points += 1
+            @happiness += 1
+            person.happiness += 1
             return "blah blah sun blah rain"
         elsif topic != "politics" || topic != "weather"
             return "blah blah blah blah blah"
@@ -96,10 +95,5 @@ class Person
         
     end
 end
-
-vincent = Person.new('Vince')
-tim = Person.new('Tim')
-
-binding.pry
 
 
